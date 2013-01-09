@@ -1,0 +1,17 @@
+<script src="/ui/common/js/showdown.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function(){	
+		var converter = new Showdown.converter();
+		$(".md").html(converter.makeHtml($(".md").html()));
+		$(".j_doc").addClass('active');
+		$(".j_doc_install").addClass('active');
+	})
+</script>
+<ul class="nav nav-pills">
+	<li class="j_doc_install"><a href="/doc">安装文档</a></li>
+	<li class="j_doc_manage"><a href="/doc/manage">管理命令</a></li>
+	<li class="j_doc_error"><a href="/doc/error">错误日志</a></li>
+</ul>
+<div class="wiki-content md">
+	$content
+</div>

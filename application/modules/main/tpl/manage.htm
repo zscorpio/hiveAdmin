@@ -1,0 +1,24 @@
+<form class="form-horizontal" method="post" action="/main/add">
+	<div class="control-group">
+		<label class="control-label" for="database">数据库名</label>
+		<div class="controls">
+			<input type="text" id="database" name="database" placeholder="数据库名">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="comment">注释</label>
+		<div class="controls">
+			<input type="text" id="comment" name="comment" placeholder="注释">(不支持中文注释)
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary">添加</button>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$(function(){	
+		$(".j_main").addClass('active');
+	})
+</script>

@@ -1,0 +1,89 @@
+<script type="text/javascript" src="/ui/main/add_table.js"></script>
+<table class="table table-bordered">
+	<thead>
+		<tr class="info">
+			<td></td>
+			<td>表名</td><td>修改</td>
+			<td>加载数据(仅内部表)</td>
+			<td>复制表</td>
+			<td>表详细</td>
+			<td>删除</td>
+		</tr>
+	</thead>
+	<tbody>
+		<!--{loop $table_list $table}-->
+		<tr>
+			<td>
+				<input type="checkbox" name="table_name[]" value="{$table}">
+			</td>
+			<td>
+				<a href="">{$table}</a>
+			</td>
+			<td>
+				<a href="">修改</a>
+			</td>
+			<td>
+				<a href="">加载数据(仅内部表)</a>
+			</td>
+			<td>
+				<a href="javascript:void(0);" class="copy_table" data-database="{$database}" data-table="{$table}">复制表</a>
+			</td>
+			<td>
+				<a href="/main/table/detail?database={$database}&table={$table}">表详细</a>
+			</td>
+			<td>
+				<a href="javascript:void(0);" class="delete_table" data-database="{$database}" data-table="{$table}">删除</a>
+			</td>
+		</tr>
+		<!--{/loop}-->
+	</tbody>
+</table>
+<p>添加数据表</p>
+<form class="form-horizontal" method="post" action="/main/table/add?database={$database}">
+	<div class="control-group">
+		<label class="control-label" for="table_name">表名</label>
+		<div class="controls">
+			<input type="text" id="table_name" name="table_name" required="required" placeholder="表名">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="column_num">字段数</label>
+		<div class="controls">
+			<input type="text" id="column_num" name="column_num" required="required" placeholder="字段数">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="table_comment">表注释</label>
+		<div class="controls">
+			<input type="text" id="table_comment" name="table_comment" required="required" placeholder="表注释">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="partitions">分区数量</label>
+		<div class="controls">
+			<input type="text" id="partitions" name="partitions" placeholder="分区数量(默认0)" disabled>(我还不知道是干吗的...)
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="external">是否外部表</label>
+		<div class="controls">
+			<select name="external" id="external">
+				<option value="1">内部表</option>
+				<option value="2">外部表</option>
+			</select>
+		</div>
+	</div>
+	<div class="add_table_tpl">
+
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary">添加</button>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$(function(){	
+		$(".j_table").addClass('active');
+	})
+</script>

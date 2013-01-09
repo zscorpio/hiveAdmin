@@ -1,0 +1,11 @@
+body {
+  position: relative;
+  padding-top: 50px;
+}
+.wrap {
+  width: 1000px;
+  margin: 0 auto;
+}
+.sidebar .well {
+  padding: 8px 0;
+}

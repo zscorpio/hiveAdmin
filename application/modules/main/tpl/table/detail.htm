@@ -1,0 +1,42 @@
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>字段名</th>
+			<th>字段类型</th>
+			<th>注释</th>
+		</tr>
+	</thead>
+	<tbody>	
+		<!--{loop $table_desc $per}-->
+		<tr>
+			<td>$per['name']</td>
+			<td>$per['type']</td>
+			<td>$per['comment']</td>
+		</tr>
+		<!--{/loop}-->`
+	</tbody>
+</table>
+<table class="table table-bordered">
+	<tr>
+		<th>详细名称</th>
+		<td>详细值</td>
+	</tr>
+	<!--{loop $detail $per}-->
+	<tr>
+		<th>$per['key']</th>
+		<td>$per['value']</td>
+	</tr>
+	<!--{/loop}-->`
+</table>
+<table class="table table-bordered">
+	<tr>
+		<th>存储名称</th>
+		<td>存储值</td>
+	</tr>
+	<!--{loop $storage $per}-->
+	<tr>
+		<th>$per['key']</th>
+		<td>$per['value']</td>
+	</tr>
+	<!--{/loop}-->`
+</table>
