@@ -11,6 +11,7 @@ class Main extends MY_Controller{
 		parent::__construct();
 		$this->load->library(array('session','layout'));
 		$this->load->helper(array('url'));
+		$this->load->business('database_biz');
 	}
 
 	public function index(){
@@ -24,14 +25,28 @@ class Main extends MY_Controller{
 
 	// 添加数据库
 	public function add(){
-		$sql = "CREATE DATABASE IF NOT EXISTS ".$this->input->post('database')." COMMENT '".$this->input->post('comment')."'";
-		$result = $this->client->execute($sql);
-		$this->transport->close();
+		$array = array(
+			'type'			=>	$this->input->post('type'),
+			'db_name'		=>	$this->input->post('database'),
+			'db_comment'	=>	$this->input->post('comment'),
+		);
+		$result = $this->database_biz->createDb($array);
 		if($result){
 			echo "添加失败";
 		}else{
 			echo "添加成功";
 			redirect('/main', 'refresh');
+		}
+	}
+
+	// 删除数据库
+	public function del(){
+		$database = $this->input->get('database');
+		$result = $this->database_biz->delDb($database);
+		if($result){
+			echo "fail";
+		}else{
+			echo "success";
 		}
 	}
 }

@@ -1,0 +1,25 @@
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>文件名</th>
+			<th>文件内容</th>
+			<th>文件类型</th>
+			<th>文件大小</th>
+		</tr>
+	</thead>
+	<tbody>	
+		<!--{loop $file_list $file}-->
+		<tr>
+			<td><a href="/main/history/result?filename=$file['real_path']">$file['filename']</a></td>
+			<td>$file['content']</td>
+			<td>$file['type']</td>
+			<td>$file['size']</td>
+		</tr>
+		<!--{/loop}-->
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){	
+		$(".j_history").addClass('active');
+	})
+</script>

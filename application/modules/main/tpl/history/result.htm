@@ -1,0 +1,21 @@
+<!--{if $csvdata['content']}-->
+	<a href="/main/history/down?filename=$filename" class="btn btn-primary">下载结果集</a>
+	<table class="table table-bordered">
+		<tbody>	
+			<!--{loop $csvdata['content'] $data}-->
+			<tr>
+				<!--{loop $data $per}-->
+					<td>$per</td>
+				<!--{/loop}-->
+			</tr>
+			<!--{/loop}-->
+		</tbody>
+	</table>
+<!--{else}-->
+	木有结果拉
+<!--{/if}-->
+<script type="text/javascript">
+	$(function(){	
+		$(".j_history").addClass('active');
+	})
+</script>

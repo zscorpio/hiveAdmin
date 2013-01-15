@@ -3,17 +3,38 @@
 		<label class="control-label" for="database">数据库名</label>
 		<div class="controls">
 			<input type="text" id="database" name="database" placeholder="数据库名">
+			<input type="hidden" name="type" value="database">
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="comment">注释</label>
 		<div class="controls">
-			<input type="text" id="comment" name="comment" placeholder="注释">(不支持中文注释)
+			<input type="text" id="comment" name="comment" placeholder="注释">
 		</div>
 	</div>
 	<div class="control-group">
 		<div class="controls">
-			<button type="submit" class="btn btn-primary">添加</button>
+			<button type="submit" class="btn btn-primary">添加数据库</button>
+		</div>
+	</div>
+</form>
+<form class="form-horizontal" method="post" action="/main/add">
+	<div class="control-group">
+		<label class="control-label" for="database">Schema名</label>
+		<div class="controls">
+			<input type="text" id="database" name="database" placeholder="Schema名">
+			<input type="hidden" name="type" value="schema">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="comment">注释</label>
+		<div class="controls">
+			<input type="text" id="comment" name="comment" placeholder="注释">
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary">添加Schema</button>
 		</div>
 	</div>
 </form>

@@ -29,4 +29,19 @@ $(function(){
 	$(".alert .close").live('click',function(){
 		$(this).parent().remove();
 	}) 
+
+	// 点击删除数据库
+	$(".remove-db").click(function(){
+		var obj = $(this);
+		var db_name = $(this).data('db');
+		if (confirm('确定删除?')==true){		
+			$.get('/main/del?database='+db_name, function(data) {
+				if(data == "success"){
+					obj.parents("li").remove();
+				}else{
+					alert('删除失败')
+				}
+			});
+		}
+	})
 })

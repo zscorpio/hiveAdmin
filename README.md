@@ -1,3 +1,10 @@
+本代码基于phphiveadmin编写,原repo在https://github.com/xianglei/phpHiveAdmin,本软件遵从GPLv3协议
+## 0.环境
+	CentOS release 6.3 (Final)
+	jdk-6u37
+	hadoop 1.1.1
+	hive 0.9.0
+	thrift-0.9.0
 ## 1. 前期准备(纯个人)  
 	1. 增加PS1配色  
 		PS1='\n\[\e[01;37m\][`a=$?;if [ $a -ne 0 ]; then echo -n -e "\[\e[01;32;41m\]{$a}"; fi`\[\033[01;32m\]\u\[\033[01;33m\]@\[\033[01;35m\]\h\[\033[00m\] \[\033[01;34m\]`pwd``B=$(git branch 2>/dev/null | sed -e "/^ /d" -e "s/* \(.*\)/\1/"); if [ "$B" != "" ]; then S="git"; elif [ -e .bzr ]; then S=bzr; elif [ -e .hg ]; then S="hg"; elif [ -e .svn ]; then S="svn"; else S=""; fi; if [ "$S" != "" ]; then if [ "$B" != "" ]; then M=$S:$B; else M=$S; fi; fi; [[ "$M" != "" ]] && echo -n -e "\[\e[33;40m\]($M)\[\033[01;32m\]\[\e[00m\]"`\[\033[01;34m\]\[\e[01;37m\]]\n\[\e[01;34m\]$ \[\e[00m\]'
@@ -54,6 +61,8 @@
 		cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 	3.安装hadoop
 		tar -zxvf hadoop-1.1.1.tar.gz
+		mkdir /usr/hadoop
+		mkdir /usr/hadoop/hadoop-1.1.1
 		然后移动到/usr/hadoop/hadoop-1.1.1
 		mv /root/download/hadoop-1.1.1 /usr/hadoop/
 	4.配置hadoop
@@ -89,9 +98,9 @@
 
 	5.启动hadoop
 		格式化一个新的分布式文件系统:
-			bin/hadoop namenode -format
+			/usr/hadoop/hadoop-1.1.1/bin/hadoop namenode -format
 		启动Hadoop守护进程：
-			bin/start-all.sh
+			/usr/hadoop/hadoop-1.1.1/bin/start-all.sh
 		Hadoop守护进程的日志写入到 ${HADOOP_LOG_DIR} 目录 (默认是 ${HADOOP_HOME}/logs).
 		浏览NameNode和JobTracker的网络接口，它们的地址默认为:
 			NameNode - http://localhost:50070/
@@ -130,7 +139,7 @@
 		    > stored as textfile;
 		drop table auction;
 		Time taken: 0.177 seconds
-## 5.安装hbase
+## 5.安装hbase(好像没用)
 	0.官方文档汉化版本
 		http://www.yankay.com/wp-content/hbase/book.html
 	1.下载habse
@@ -160,7 +169,7 @@
 	2.解压缩
 		tar -zxvf thrift-0.9.0.tar.gz
 	3.安装
-		依赖:yum install automake libtool flex bison pkgconfig gcc-c++ boost-devel libevent-devel zlib-devel python-devel ruby-devel
+		依赖:yum install automake make libtool flex bison pkgconfig gcc-c++ boost-devel libevent-devel zlib-devel python-devel ruby-devel
 			(不行? configure: error: "Error: libcrypto required.")	
 			yum install openssl openssl-devel mysql-devel libmcrypt libmcrypt-devel curl-devel	
 		./configure --without-ruby(可能需要安装python,ruby,php) 	

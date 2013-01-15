@@ -6,4 +6,6 @@
 			'port'	=>	'10000',
 			'root'	=>	APPPATH.'third_party/thrift/'
 		),
+		'log_path'	=> APPPATH.'logs',
+		'results'	=> APPPATH.'results'
 	);

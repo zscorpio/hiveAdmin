@@ -21,8 +21,8 @@
 		</property>
 	</configuration>
 	http://stackoverflow.com/questions/10735843/create-table-exception-in-hive
-
-
+####Q: FAILED: Error in metadata: javax.jdo.JDOFatalDataStoreException: Failed to start database '/home/wwwroot/phpHiveAdmin/metastore_db', see the next exception for details.NestedThrowables:java.sql.SQLException: Failed to start database '/home/wwwroot/phpHiveAdmin/metastore_db', see the next exception for details.FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
+	这个应该是不能同时开着thrift和cli的原因,所以只要关闭thrift就好了
 
 ### 附录:
 		1.如果出现下面错误

@@ -16,3 +16,4 @@
 	开启hwi
 		/usr/hadoop/hive-0.9.0/bin/hive --service hwi
 		访问:http://hadoop.500mi.com:9999/hwi/
+	重启需要关闭iptables,开启smb,开启hadoop,开启thrift...(个人需要)	

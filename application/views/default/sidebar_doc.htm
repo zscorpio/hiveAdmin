@@ -1,0 +1,14 @@
+<div class="row-fluid">
+	<div class="span2 sidebar">
+		<div class="well">
+			<ul class="nav nav-list">
+				<!--{loop $file_list $value}-->
+					<li class="nav-header">$value['dir']['ch']</li>
+					<!--{loop $value['child'] $svalue}-->
+						<li class="file-child"><a href="javascript:;" data-en="$svalue['en']">$svalue['ch']</a></li>
+					<!--{/loop}-->
+				<!--{/loop}-->
+			</ul>
+		</div>
+	</div>
+	<div class="span10 content">

@@ -9,3 +9,15 @@ body {
 .sidebar .well {
   padding: 8px 0;
 }
+.sidebar i {
+  margin-top: 5px;
+}
+.sidebar i:hover {
+  cursor: pointer;
+}
+.sidebar i:hover {
+  cursor: pointer;
+}
+.footer p {
+  text-align: center;
+}

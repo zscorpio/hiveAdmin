@@ -1,0 +1,5 @@
+- application/libraries/common/Csv.php 27 行我加了@抑制错误  
+- 中文输出好像有点问题
+- show database;show schemas;结果是一样的
+- 什么时候应该fetchAll,什么时候不需要
+- hive编程编码怎么选择?
