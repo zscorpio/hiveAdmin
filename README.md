@@ -1,4 +1,4 @@
-本代码基于phphiveadmin编写,原repo在https://github.com/xianglei/phpHiveAdmin,本软件遵从GPLv3协议
+本代码基于phphiveadmin编写,原repo在https://github.com/xianglei/phpHiveAdmin, 本软件遵从GPLv3协议
 web环境配好之后http://ip/doc里面还有一些其他的文档
 ## 0.环境
 	CentOS release 6.3 (Final)
