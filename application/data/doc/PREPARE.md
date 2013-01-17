@@ -22,3 +22,16 @@
 	`yum install vim`
 	`yum  install openssh-server openssh-clients`
 
+3.配置虚拟主机 ci的rewrite重新设置
+	if (-f $request_filename/index.php) {
+		rewrite (.*) $1/index.php;
+	}
+	if (!-f $request_filename) {
+		rewrite (.*) /index.php;
+	}	
+
+4.如果报错不显示,显示500错误,需要打开报错
+	php.ini 两处
+	error_reporting = E_ALL & ~E_NOTICE  只是报出error，notiec过滤掉
+	display_errors = On    on是开启报错，off关闭	
+

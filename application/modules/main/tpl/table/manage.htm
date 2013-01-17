@@ -2,7 +2,7 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<td>表名</td>
+			<td>数据库名</td>
 			<td>注释</td>
 			<td>hdfs地址</td>
 		</tr>
@@ -19,7 +19,9 @@
 	<thead>
 		<tr class="info">
 			<td></td>
-			<td>表名</td><td>修改</td>
+			<td>表名</td>
+			<td>查询</td>
+			<td>修改</td>
 			<td>加载数据(仅内部表)</td>
 			<td>复制表</td>
 			<td>表详细</td>
@@ -27,19 +29,26 @@
 		</tr>
 	</thead>
 	<tbody>
-		<!--{loop $table_list $table}-->
+		<!--{loop $table_list $key $table}-->
 		<tr>
 			<td>
 				<input type="checkbox" name="table_name[]" value="{$table}">
 			</td>
 			<td>
-				<a href="">{$table}</a>
+				{$table}
 			</td>
 			<td>
-				<a href="">修改</a>
+				<a href="/main/table/query?database={$database}&table={$table}" class="btn btn-mini">查询</a>
 			</td>
 			<td>
-				<a href="">加载数据(仅内部表)</a>
+				<a href="/main/table/alert?database={$database}&table={$table}">修改</a>
+			</td>
+			<td>
+				<!--{if $table_detail[$key]['type'] == 'MANAGED_TABLE'}-->
+					<a href="javascript:void(0);" class="load_data" data-database="{$database}" data-table="{$table}">加载数据</a>
+				<!--{else}-->
+					外部表
+				<!--{/if}-->
 			</td>
 			<td>
 				<a href="javascript:void(0);" class="copy_table" data-database="{$database}" data-table="{$table}">复制表</a>
@@ -48,7 +57,7 @@
 				<a href="/main/table/detail?database={$database}&table={$table}">表详细</a>
 			</td>
 			<td>
-				<a href="javascript:void(0);" class="delete_table" data-database="{$database}" data-table="{$table}">删除</a>
+				<a href="javascript:void(0);" class="delete_table btn btn-mini btn-danger" data-database="{$database}" data-table="{$table}">删除</a>
 			</td>
 		</tr>
 		<!--{/loop}-->
@@ -57,9 +66,9 @@
 <p>添加数据表</p>
 <form class="form-horizontal" method="post" action="/main/table/add?database={$database}">
 	<div class="control-group">
-		<label class="control-label" for="table_name">表名</label>
+		<label class="control-label" for="new_table">表名</label>
 		<div class="controls">
-			<input type="text" id="table_name" name="table_name" required="required" placeholder="表名">
+			<input type="text" id="new_table" name="new_table" required="required" placeholder="表名">
 		</div>
 	</div>
 	<div class="control-group">

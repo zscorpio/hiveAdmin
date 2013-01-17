@@ -1,4 +1,5 @@
 本代码基于phphiveadmin编写,原repo在https://github.com/xianglei/phpHiveAdmin,本软件遵从GPLv3协议
+web环境配好之后http://ip/doc里面还有一些其他的文档
 ## 0.环境
 	CentOS release 6.3 (Final)
 	jdk-6u37
@@ -59,6 +60,9 @@
 		ssh-keygen -t rsa 
 		如果不能直接登录(ssh localhost)
 		cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+		ssh公钥复制到服务器
+		ssh-copy-id -i .ssh/id_rsa.pub root@master.500mi.com
+		ssh-copy-id -i .ssh/id_rsa.pub root@slave.500mi.com
 	3.安装hadoop
 		tar -zxvf hadoop-1.1.1.tar.gz
 		mkdir /usr/hadoop

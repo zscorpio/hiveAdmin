@@ -2,21 +2,22 @@ body {
   position: relative;
   padding-top: 50px;
 }
-.wrap {
-  width: 1000px;
-  margin: 0 auto;
-}
 .sidebar .well {
   padding: 8px 0;
 }
-.sidebar i {
-  margin-top: 5px;
+.sidebar li {
+  position: relative;
 }
-.sidebar i:hover {
+.sidebar li i {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.sidebar li i:hover {
   cursor: pointer;
 }
-.sidebar i:hover {
-  cursor: pointer;
+.content .active_tr {
+  background: #eeeeee;
 }
 .footer p {
   text-align: center;

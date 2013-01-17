@@ -2,19 +2,25 @@ body{
 	position: relative;
 	padding-top: 50px;
 }
-.wrap{
-	width: 1000px;
-	margin: 0 auto;
-}
 .sidebar{
 	.well{
 		padding: 8px 0;
 	}
-	i{
-		margin-top: 5px;
-		&:hover{
-			cursor: pointer;
+	li{
+		position: relative;	
+		i{
+			position: absolute;
+			right: 5px;
+			top: 5px;
+			&:hover{
+				cursor: pointer;
+			}
 		}
+	}
+}
+.content{
+	.active_tr{
+		background: #eee;
 	}
 }
 .footer{

@@ -1,0 +1,207 @@
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<td>表改名</td>
+			<td>
+				<input type="text" name="new_table" class="new_table" value="$table">
+			</td>
+		</tr>
+		<tr>
+			<td>数据表类型</td>
+			<td>
+				<select name="external" class="external">
+					<option value="EXTERNAL_TABLE" {if $external=='EXTERNAL_TABLE'} selected="selected" {/if}>外部表</option>
+					<option value="MANAGED_TABLE" {if $external=='MANAGED_TABLE'} selected="selected" {/if}>内部表</option>
+					<option value="INDEX_TABLE" disabled {if $external=='INDEX_TABLE'} selected="selected" {/if}>索引表</option>
+					<option value="VIRTUAL_VIEW" disabled {if $external=='VIRTUAL_VIEW'} selected="selected" {/if}>虚拟视图</option>
+				</select>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<button class="btn btn-info btn-save" data-database="$database" data-table="$table" style="margin-bottom:10px;">保存全部修改</button>
+<button class="btn btn-danger btn-del" data-database="$database" data-table="$table" style="margin-bottom:10px;">删除表</button>
+<table class="table table-bordered field">
+	<thead>
+		<tr>
+			<th>
+				<span>字段名</span>
+				<button class="add-field btn btn-primary">增加字段</button>
+			</th>
+			<th>字段类型</th>
+			<th>注释</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!--{loop $table_desc $per}-->
+		<tr>
+			<td><input type="text" class="field_name" name="field_name" value="$per['name']"></td>
+			<td>
+				<select name="cols_type" class="cols_type">
+					<option {if $per['type']=='string'} selected="selected" {/if} value="string">String</option>
+					<option {if $per['type']=='tinyint'} selected="selected" {/if} value="tinyint">Tiny int(3)</option>
+					<option {if $per['type']=='smallint'} selected="selected" {/if} value="smallint">Small int(5)</option>
+					<option {if $per['type']=='int'} selected="selected" {/if} value="int">Int(10)</option>
+					<option {if $per['type']=='bigint'} selected="selected" {/if} value="bigint">Big int(19)</option>
+					<option {if $per['type']=='double'} selected="selected" {/if} value="double">Double</option>
+					<option {if $per['type']=='map'} selected="selected" {/if} value="map" disabled>Map</option>
+					<option {if $per['type']=='structs'} selected="selected" {/if} value="structs" disabled>Structs</option>
+					<option {if $per['type']=='arrays'} selected="selected" {/if} value="arrays" disabled>Arrays</option>
+					<option {if $per['type']=='float'} selected="selected" {/if} value="float">Float</option>
+					<option {if $per['type']=='boolean'} selected="selected" {/if} value="boolean">Boolean</option>
+				</select>
+			</td>
+			<td>
+				<input type="text" class="comment" name="comment" value="$per['comment']">
+				<button class="btn btn-danger remove-field" style="margin-bottom:10px;">移除</button>
+				<button class="btn btn-success save-field" style="margin-bottom:10px;" data-field_name="$per['name']">保存</button>
+			</td>
+		</tr>
+		<!--{/loop}-->
+	</tbody>
+</table>
+<script type="text/javascript">
+	var Table = {
+		init : function(){
+		},
+		alert_tpl : function(type,info){
+			var tpl=[
+				'<div class="alert alert-'+type+'">',
+				'	<button type="button" class="close" data-dismiss="alert">×</button>',
+					info,
+				'</div>'
+			].join('\n');
+			return tpl;	
+		}
+	}
+	$(function(){
+		// 增加字段
+		$(".add-field").click(function(){
+			var data_type = {
+				'string' 	: 	'String',
+				"tinyint" 	: 	'Tiny int(3)',
+				"smallint" 	: 	'Small int(5)',
+				"int"		: 	'Int(10)',
+				"bigint" 	: 	'Big int(19)',
+				"double"	: 	'Double',
+				"float"		: 	'Float',
+				"boolean"	: 	'Boolean'
+			};
+			var	type_list = '';
+			for(i in data_type){
+				type_list += '<option value="'+i+'">'+data_type[i]+'</option>';
+			}
+			var tpl = [
+				'<tr>',
+				'	<td><input type="text" class="field_name" name="field_name"></td>',
+				'	<td>',
+				'		<select name="cols_type" class="cols_type">',
+							type_list,
+				'		</select>',
+				'	</td>',
+				'	<td><input type="text" class="comment" name="comment"><button class="btn btn-danger remove-field" style="margin-bottom:10px;">移除</button><button class="btn btn-success add-field-btn" style="margin-bottom:10px;">保存</button></td>',
+				'</tr>'
+			].join('\n');
+			$(".field tbody").append(tpl);
+		})
+		// 保存增加字段
+		$(".add-field-btn").live("click",function(){
+			var data = {
+				database 	: $(".btn-save").data('database'),
+				table 		: $(".btn-save").data('table'),
+				field_name	: $(this).parents('tr').find('.field_name').val(),
+				cols_type	: $(this).parents('tr').find('.cols_type').val(),
+				comment		: $(this).parents('tr').find('.comment').val()
+			}
+			$.post('/main/table/addColumn', data, function(response) {
+				$(".alert").remove();
+				if(response == 'success'){
+					$(".content").prepend(Table.alert_tpl('success','保存成功'));
+				}else{
+					$(".content").prepend(Table.alert_tpl('error','保存失败'));
+				}
+			});
+		})
+		// 移除字段
+		$(".remove-field").live("click",function(){
+			var obj = $(this);
+			var data = {
+				database 	: $(".btn-save").data('database'),
+				table 		: $(".btn-save").data('table'),
+				field_name	: $(this).parents('tr').find('.field_name').val(),
+				cols_type	: $(this).parents('tr').find('.cols_type').val(),
+				comment		: $(this).parents('tr').find('.comment').val()
+			}
+			$.post('/main/table/removeColumn', data, function(response) {
+				obj.parents('tr').remove();
+				$(".alert").remove();
+				if(response == 'success'){
+					$(".content").prepend(Table.alert_tpl('success','移除成功'));
+				}else{
+					$(".content").prepend(Table.alert_tpl('error','移除失败'));
+				}
+			});
+		})
+		// 修改字段
+		$(".save-field").live("click",function(){
+			var data = {
+				database 	: $(".btn-save").data('database'),
+				table 		: $(".btn-save").data('table'),
+				bf_field_name:$(this).data('field_name'),
+				field_name	: $(this).parents('tr').find('.field_name').val(),
+				cols_type	: $(this).parents('tr').find('.cols_type').val(),
+				comment		: $(this).parents('tr').find('.comment').val()
+			}
+			$.post('/main/table/changeColumn', data, function(response) {
+				$(".alert").remove();
+				if(response == 'success'){
+					$(".content").prepend(Table.alert_tpl('success','修改成功'));
+				}else{
+					$(".content").prepend(Table.alert_tpl('error','修改失败'));
+				}
+			});
+		})
+		// 保存修改
+		$(".btn-save").click(function(){
+			var data = {
+				database 	: $(this).data('database'),
+				table 		: $(this).data('table'),
+				new_table 	: $(".new_table").val(),
+				external 	: $(".external").val(),
+				submit		: 1
+			}
+			$.post('/main/table/alert', data, function(response) {
+				$(".alert").remove();
+				var string = '';
+				if(response.rename == 'success'){
+					string += '改名成功,';
+				}else{
+					string += '改名失败,'
+				}
+				if(response.change == 'success'){
+					string += '改类型成功';
+				}else{
+					string += '改类型失败'
+				}
+				$(".content").prepend(Table.alert_tpl('info',string));
+				location.reload();
+			},'json');
+		})
+		// 删除表
+		$(".btn-del").click(function(){
+			if(confirm('你确定删除吗?')){
+				$(".content").prepend(Table.alert_tpl('info','删除ing...'));
+				var database = $(this).data('database'),
+					table 	 = $(this).data('table');
+				$.get('/main/table/drop?database='+database+"&table="+table,function(data){
+					$(".alert").remove();
+					if(data == 'success'){
+						window.location.href="/main/table?database="+database; 
+					}else{
+						$(".content").prepend(Table.alert_tpl('error','删除失败'));
+					}
+				});
+			}
+		})
+	})
+</script>

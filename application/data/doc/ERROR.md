@@ -23,7 +23,19 @@
 	http://stackoverflow.com/questions/10735843/create-table-exception-in-hive
 ####Q: FAILED: Error in metadata: javax.jdo.JDOFatalDataStoreException: Failed to start database '/home/wwwroot/phpHiveAdmin/metastore_db', see the next exception for details.NestedThrowables:java.sql.SQLException: Failed to start database '/home/wwwroot/phpHiveAdmin/metastore_db', see the next exception for details.FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
 	这个应该是不能同时开着thrift和cli的原因,所以只要关闭thrift就好了
-
+####Q:WARNING: org.apache.hadoop.metrics.jvm.EventCounter is deprecated. Please use org.apache.hadoop.log.metrics.EventCounter in all the log4j.properties files.
+	这个报错是在/usr/hadoop/hive-0.9.0/bin/hive --service hiveserver的时候命令行下出现的错误
+	解决的办法是vim /usr/hadoop/hive-0.9.0/conf/hive-log4j.properties
+	将log4j.appender.EventCounter的值修改为org.apache.hadoop.log.metrics.EventCounter
+####Q:Warning: $HADOOP_HOME is deprecated
+	编辑.bash_profile文件
+	export HADOOP_HOME_WARN_SUPPRESS=1
+####Q:Failed with exception java.io.IOException: File /tmp/hive-root/hive_2013-01-16_22-36-46_262_8325390394866081524/-ext-10000/test.txt could only be replicated to 0 nodes, instead of 1
+	可以看下jps命令,看下datanode和namenode是不是起来了,没有的话就
+	/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start namenode	
+	/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode
+	单独重新起一遍
+	关闭slave的iptables
 ### 附录:
 		1.如果出现下面错误
 			$ bin/hadoop namenode –format

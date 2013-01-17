@@ -54,57 +54,42 @@ class Database_biz
 
 	function getTbaleInfo($database,$table)
 	{
-		require_once APPPATH."third_party/thrift/classes/class.etc.php";
-		$etc = new Etc;
-		$result = $this->ci->database_model->getTbaleInfo($database,$table);
-		$table_desc_tmp = $etc->GetTableDetail($result, "1");
-		$table_desc = array();
-		foreach ($table_desc_tmp as $key => $value) {
-			$array = array();
-			$tmp = explode('	',$value);
-			$array['name']  	= trim($tmp[0]);
-			$array['type']  	= trim($tmp[1]);
-			if(isset($tmp[2])){
-				$array['comment']  	= trim($tmp[2]);
-			}else{
-				$array['comment']  	= '';
-			}
-			array_push($table_desc, $array);
-		}
-		// ==============================================
-		$detail_tmp = $etc->GetTableDetail($result, "2");
-		$detail = array();
-		foreach ($detail_tmp as $key => $value) {
-			$array = array();
-			$tmp = explode('	',$value);
-			$array['key']  	= trim($tmp[0]);
-			if(isset($tmp[1])){
-				$array['value'] = trim($tmp[1]);
-			}else{
-				$array['value'] = '';
-			}
-			array_push($detail, $array);
-		}
-		// ==============================================
-		$storage_tmp = $etc->GetTableDetail($result, "3");
-		$storage = array();
-		foreach ($storage_tmp as $key => $value) {
-			$array = array();
-			$tmp = explode('	',$value);
-			$array['key']  	= trim($tmp[0]);
-			if(isset($tmp[1])){
-				$array['value'] = trim($tmp[1]);
-			}else{
-				$array['value'] = '';
-			}
-			array_push($storage, $array);
-		}
-		// ==============================================
-		$tmp = array();
-		$tmp["table_desc"] 	= $table_desc;
-		$tmp["detail"] 		= $detail;
-		$tmp["storage"] 	= $storage;
-		return $tmp;
+		return $this->ci->database_model->getTbaleInfo($database,$table);
 	}	
+
+	function cloneTable($data)
+	{
+		return $this->ci->database_model->cloneTable($data);
+	}
+
+	function load($data)
+	{
+		return $this->ci->database_model->load($data);
+	}
+
+	function renameTbale($database,$table,$new_table)
+	{
+		return $this->ci->database_model->renameTbale($database,$table,$new_table);
+	}
+
+	function changeExternal($database,$table,$external)
+	{
+		return $this->ci->database_model->changeExternal($database,$table,$external);
+	}
+
+	function removeColumn($database,$table,$column)
+	{
+		return $this->ci->database_model->removeColumn($database,$table,$column);
+	}
+
+	function changeColumn($database,$table,$data)
+	{
+		return $this->ci->database_model->changeColumn($database,$table,$data);
+	}
+
+	function addColumn($database,$table,$data)
+	{
+		return $this->ci->database_model->addColumn($database,$table,$data);
+	}
 
 }
