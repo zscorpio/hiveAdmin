@@ -36,6 +36,10 @@
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode
 	单独重新起一遍
 	关闭slave的iptables
+####Q:FAILED: Hive Internal Error: java.lang.RuntimeException(org.apache.hadoop.ipc.RemoteException: org.apache.hadoop.hdfs.server.namenode.SafeModeException: Cannot create directory /tmp/hive-root/hive_2013-01-17_08-29-50_514_3377431792490577734. Name node is in safe mode.The reported blocks is only 0 but the threshold is 0.9990 and the total blocks 5. Safe mode will be turned off automatically.
+	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfsadmin -safemode leave 离开安全模式
+####Q:Failed with exception java.io.IOException:java.io.IOException: Could not obtain block: blk_6921337026575992023_1409 file=/user/hive/warehouse/login/test.txt
+		datanode没起来 /usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode
 ### 附录:
 		1.如果出现下面错误
 			$ bin/hadoop namenode –format

@@ -92,4 +92,14 @@ class Database_biz
 		return $this->ci->database_model->addColumn($database,$table,$data);
 	}
 
+	function cliQuery($sql, $finger_print)
+	{
+		return $this->ci->database_model->cliQuery($sql, $finger_print);
+	}
+	
+	function queryStatus($finger_print)
+	{
+		return $this->ci->database_model->queryStatus($finger_print);
+	}
+
 }

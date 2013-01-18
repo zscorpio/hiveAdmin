@@ -1,4 +1,6 @@
 - application/libraries/common/Csv.php 27 行我加了@抑制错误  
+- application/business/utils_biz 29行写死scorpio
+- application/models/database_model.php 353行注释了
 - 中文输出好像有点问题
 - show database;show schemas;结果是一样的
 - 什么时候应该fetchAll,什么时候不需要
