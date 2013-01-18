@@ -446,5 +446,15 @@ class Database_model extends HIVE_Model{
 			echo 'Caught exception: '.  $e->getMessage(). "\n";
 		}
 	}
+
+	// 查询
+	public function hiveQuery($sql){
+		try{
+			$this->client->execute($sql);
+			return $this->client->fetchAll();
+		}catch (Exception $e){
+			return 'Caught exception: '. $e->getMessage()."\n";
+		}
+	}
 }	
 ?>

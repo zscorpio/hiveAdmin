@@ -92,6 +92,11 @@ class Database_biz
 		return $this->ci->database_model->addColumn($database,$table,$data);
 	}
 
+	function hiveQuery($sql)
+	{
+		return $this->ci->database_model->hiveQuery($sql);
+	}
+
 	function cliQuery($sql, $finger_print)
 	{
 		return $this->ci->database_model->cliQuery($sql, $finger_print);

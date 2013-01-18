@@ -197,6 +197,7 @@ web环境配好之后http://ip/doc里面还有一些其他的文档
 		/sbin/service mysqld start           [启动mysql服务,与开机无关] 
 
 ### 附录
+	https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin(官方metastore介绍)
 	http://www.fuzhijie.me/?p=377(Hive metastore三种存储方式)
 
 		

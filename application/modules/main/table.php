@@ -234,6 +234,12 @@ class Table extends MY_Controller{
 		return $this->database_biz->changeExternal($database,$table,$external);
 	}
 
+	// hive query
+	public function hiveQuery(){
+		$result =  $this->database_biz->hiveQuery($this->input->post('sql'));
+		var_dump($result);
+	}
+
 	// 查询相关
 	public function excuteQuery(){
 		$database 	= $this->input->post('database');

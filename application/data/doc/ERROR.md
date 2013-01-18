@@ -40,6 +40,7 @@
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfsadmin -safemode leave 离开安全模式
 ####Q:Failed with exception java.io.IOException:java.io.IOException: Could not obtain block: blk_6921337026575992023_1409 file=/user/hive/warehouse/login/test.txt
 		datanode没起来 /usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode
+		datanode起不来不知道为什么,我把tmp删掉貌似就好了...求解决方法
 ### 附录:
 		1.如果出现下面错误
 			$ bin/hadoop namenode –format
