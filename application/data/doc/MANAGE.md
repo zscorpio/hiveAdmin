@@ -17,6 +17,9 @@
 		/usr/hadoop/hive-0.9.0/bin/hive --service hwi
 		访问:http://hadoop.500mi.com:9999/hwi/
 	单独启动namenode或者datanode
-	/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start namenode	
-	/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode	
+		/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start namenode	
+		/usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode	
 	重启需要关闭iptables,开启smb,开启hadoop,开启thrift...(个人需要)	
+	查看端口被哪个进程占用
+		 lsof -i:10000(yum intall lsof)
+		 kill -9 PID

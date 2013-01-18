@@ -332,5 +332,119 @@ class Database_model extends HIVE_Model{
 		}
 	}
 	
+	// cli查询
+	public function cliQuery($sql, $finger_print){
+		try{
+			$this->load->business('utils_biz');
+			$this->config->load('base_config',TRUE);
+			$config = $this->config->item('base_config');
+			$LANG = " export LANG=" . $config['lang_set'] . "; ";
+			$JAVA_HOME = " export JAVA_HOME=" . $config['java_home'] . "; ";
+			$HADOOP_HOME = " export HADOOP_HOME=" . $config['hadoop_home'] . "; ";
+			$HIVE_HOME = " export HIVE_HOME=" . $config['hive_home']. "; ";
+
+			$filename = $this->utils_biz->makeFilename($finger_print);
+			$log_file = $filename['log_with_path'];
+			$out_file = $filename['out_with_path'];
+			$run_file = $filename['run_with_path'];
+
+			$this->load->helper('file');
+			write_file($log_file, $sql);
+			// $this->load->model('history_model', 'history');
+			// $this->history->create_history($this->session->userdata('username'), $finger_print);
+			echo $run_file;
+			$cmd = $LANG . $JAVA_HOME . $HADOOP_HOME . $HIVE_HOME . $config['hive_home'] . "/bin/hive -f " . $log_file . " > " . $out_file;
+			// var_dump($cmd);
+			$this->asyncExecuteHql($cmd, $run_file, 2, $code);
+			$this->utils_biz->exportCsv($finger_print);
+			sleep(1);
+		}catch (Exception $e){
+			return 'Caught exception: '. $e->getMessage()."\n";
+		}
+	}
+
+	// 同步执行hql
+	public function asyncExecuteHql($command, $file_name, $type, &$code){
+		$descriptorspec = array(
+			0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+			1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+			2 => array("pipe", "w") // stderr is a file to write to
+		);
+		$pipes= array();
+		$process = proc_open($command, $descriptorspec, $pipes);
+		$output= "";
+		if (!is_resource($process)){
+			return false;
+		}
+		#close child's input immediately
+		fclose($pipes[0]);
+		stream_set_blocking($pipes[1],0);
+		stream_set_blocking($pipes[2],0);
+		$todo= array($pipes[1],$pipes[2]);
+		try{
+			$fp = fopen($file_name, "w");
+			while( true ){
+				$read= array(); 
+				if( !feof($pipes[$type]) )
+					$read[]= $pipes[$type];// get system stderr on real time
+				if (!$read){
+					break;
+				}
+				$ready = stream_select($read, $write=NULL, $ex= NULL, 2);
+				if ($ready === false){
+					break; #should never happen - something died
+				}
+				foreach ($read as $r){
+					$s= fread($r,128);
+					$output .= $s;
+					fwrite($fp,$s);
+				}
+			}
+			fclose($fp);
+		}catch (Exception $e){
+			echo 'Caught exception: '.  $e->getMessage(). "\n";
+		}
+		fclose($pipes[1]);
+		fclose($pipes[2]);
+		$code= proc_close($process);
+		return $output;
+	}
+
+	// 查询状态
+	public function queryStatus($finger_print){
+		$this->load->business('utils_biz');
+		$filename = $this->utils_biz->makeFilename($finger_print);
+		$run_file = $filename['run_with_path'];
+		try{
+			$array = file($run_file);
+			if(is_array($array)){
+				$array = array_reverse($array);
+				$text = "";
+				foreach($array as $k => $v)
+				{
+					$text .= trim($v)."<br>";
+				}
+				$str = $array[0];
+				$start_map = strpos($str, "map = ")+6;
+				$end_map = strpos($str, "%");
+				$len_map = $end_map - $start_map;
+				$start_reduce = strpos($str, "reduce = ")+9;
+				$end_reduce = strrpos($str, "%");
+				$len_reduce = $end_reduce - $start_reduce;
+				$map_per = substr($str, $start_map, $len_map);
+				$reduce_per = substr($str, $start_reduce, $len_reduce);
+				if(!is_numeric($map_per) || !is_numeric($reduce_per)){
+					$map_per = 0;
+					$reduce_per = 0;
+				}
+				$json = '{"map_percent":"'.$map_per.'","reduce_percent":"'.$reduce_per.'","text":"'.$text.'"}';
+				return $json;
+			}else{
+				die('Do not re-submit!!!');
+			}
+		}catch (Exception $e){
+			echo 'Caught exception: '.  $e->getMessage(). "\n";
+		}
+	}
 }	
 ?>

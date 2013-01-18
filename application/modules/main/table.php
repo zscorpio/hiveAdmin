@@ -44,7 +44,7 @@ class Table extends MY_Controller{
 		$params							= array();
 		$params["database"] 			= $this->input->get('database');
 		$params["external"]  			= $this->input->post('external');
-		$params["table"]  				= $this->input->post('table_name');
+		$params["table"]  				= $this->input->post('new_table');
 		$params["field_name"]  			= $this->input->post('field_name');
 		$params["field_type"]  			= $this->input->post('field_type');
 		$params["comment"]  			= $this->input->post('comment');
@@ -52,7 +52,7 @@ class Table extends MY_Controller{
 		$params["ext"]  				= "";
 		$params["table_comment"]  		= $this->input->post('table_comment');
 		$params["data_terminator"]  	= $this->input->post('data_terminator');
-		$params["column_terminator"]  	= $this->input->post('column_terminator');	
+		$params["column_terminator"]  	= $this->input->post('column_terminator');
 		$result = $this->database_biz->createTable($params);
 		if($result){
 			echo "添加失败";
@@ -124,9 +124,8 @@ class Table extends MY_Controller{
 
 	// 数据查询
 	public function query(){
-		$data = array();
-		$data["database"] 	= $this->input->post('database');
-		$data["table"] 		= $this->input->post('table');
+		$this->_data["database"] 	= $this->input->get('database');
+		$this->_data["table"] 		= $this->input->get('table');
 		$this->layout->template('/table/query', $this->_data);
 	}
 
@@ -233,6 +232,47 @@ class Table extends MY_Controller{
 	// 修改表类型
 	private function _changeExternal($database,$table,$external){
 		return $this->database_biz->changeExternal($database,$table,$external);
+	}
+
+	// 查询相关
+	public function excuteQuery(){
+		$database 	= $this->input->post('database');
+		$table		= $this->input->post('table');
+		$column		= $this->input->post('field_name');
+		$type		= $this->input->post('cols_type');
+		$comment	= $this->input->post('comment');
+		$data 		= array(
+			'column'	=>	$column,
+			'type'		=>	$type,
+			'comment'	=>	$comment
+		);
+		$result =  $this->database_biz->addColumn($database,$table,$data);
+		if($result){
+			echo "fail";
+		}else{
+			echo "success";
+		}
+	}
+
+	// getFingerPrint
+	public function getFingerPrint(){
+		$this->load->business('utils_biz');
+		echo $this->utils_biz->makeFingerPrint();
+	}
+
+	// 开始查询
+	public function sqlQuery(){
+		$sql = $this->input->post('sql');
+		$database = $this->input->post('database');
+		$sql = "USE ".$database. ";".$sql;
+		$finger_print = $this->input->post('finger_print');
+		$this->database_biz->cliQuery($sql, $finger_print);
+	}
+
+	// 查询状态
+	public function queryStatus($finger_print){
+		$str = $this->database_biz->queryStatus($finger_print);
+		echo $str;
 	}
 
 }

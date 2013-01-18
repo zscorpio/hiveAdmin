@@ -2,3 +2,4 @@
 /application/logs
 /application/views/metastore_db
 /application/views/derby.log
+/metastore_db
