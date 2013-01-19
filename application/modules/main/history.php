@@ -45,11 +45,15 @@ class History extends MY_Controller{
 		}else{
 			$str = $filename;
 		}
-		$res_file = $this->results."/hive_res.".$str.".csv";
+		$res_file = $this->results."hive_res.".$str.".csv";
 		$this->load->library('common/csv');
 		$csvdata  = $this->csv->read($res_file);
 		if (!isset($csvdata['content'])) {
 			$csvdata = array('content'=>array());
+		}
+		foreach ($csvdata['content'] as $key => $value) {
+			// var_dump($value);
+			$csvdata['content'][$key][0] = explode("\t", $value[0]);
 		}
 		$this->_data['csvdata'] = $csvdata;
 		$this->_data['filename'] = $res_file;

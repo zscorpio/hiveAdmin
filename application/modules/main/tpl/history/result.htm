@@ -5,7 +5,9 @@
 			<!--{loop $csvdata['content'] $data}-->
 			<tr>
 				<!--{loop $data $per}-->
-					<td>$per</td>
+					<!--{loop $per $per_data}-->
+						<td>$per_data</td>
+					<!--{/loop}-->
 				<!--{/loop}-->
 			</tr>
 			<!--{/loop}-->

@@ -41,6 +41,17 @@
 ####Q:Failed with exception java.io.IOException:java.io.IOException: Could not obtain block: blk_6921337026575992023_1409 file=/user/hive/warehouse/login/test.txt
 		datanode没起来 /usr/hadoop/hadoop-1.1.1/bin/hadoop-daemon.sh start datanode
 		datanode起不来不知道为什么,我把tmp删掉貌似就好了...求解决方法
+####Q:FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask<br>org.apache.commons.dbcp.SQLNestedException: Cannot get a connection, pool error Could not create a validated object, cause: A read-only user or a user in a read-only database is not permitted to disable read-only mode on a connection.<br>NestedThrowables:<br>FAILED: Error in metadata: javax.jdo.JDOFatalDataStoreException: Cannot get a connection, pool error Could not create a validated object, cause: A read-only user or a user in a read-only database is not permitted to disable read-only mode on a connection.<br>Database Class Loader started - derby.database.classpath=''<br><br>on database directory /root/metastore_db in READ ONLY mode<br>Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a816c00e-013c-469b-c608-00000036f028<br>2013-01-17 03:44:40.112 GMT:<br>----------------------------------------------------------------<br>2013-01-17 03:44:39.430 GMT Thread[main,5,main] java.io.FileNotFoundException: derby.log (Permission denied
+	chown -R root:root metastore_db
+	如果不知道是哪个....那就全部吧.....
+####Q:FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask<br>java.lang.reflect.InvocationTargetException NestedThrowables:FAILED: Error in metadata: javax.jdo.JDOFatalInternalException: Error creating transactional connection factory
+	需要把mysql-connector-java-5.1.15-bin.jar拷贝到hive的lib目录下才行
+####Q:at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.check(FSPermissionChecker.java:199)<br>Caused by: org.apache.hadoop.ipc.RemoteException: org.apache.hadoop.security.AccessControlException: Permission denied: user=www, access=WRITE, inode="tmp":root:supergroup:rwxr-xr-x
+	/usr/hadoop/hadoop-1.1.1/bin/hadoop fs -chmod 777  /tmp
+	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfs -chown -R  root:root /tmp
+	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfs -chmod a+w /tmp
+
+
 ### 附录:
 		1.如果出现下面错误
 			$ bin/hadoop namenode –format

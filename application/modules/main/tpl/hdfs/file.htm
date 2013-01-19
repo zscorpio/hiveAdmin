@@ -1,0 +1,30 @@
+<p class="text-info">我能说我不是很想做这个功能吗</p>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>文件属性</td>
+			<td>用户</td>
+			<td>组</td>
+			<td>文件大小</td>
+			<td>创建时间</td>
+			<td>文件名</td>
+		</tr>
+	</thead>
+	<tbody>	
+		<!--{loop $result $file}-->
+		<tr>
+			<td>$file['file_property']</td>
+			<td>$file['file_user']</td>
+			<td>$file['file_group']</td>
+			<td>$file['file_size']</td>
+			<td>$file['file_time']</td>
+			<td><a href="/main/hdfs?path=$file['file_name']">$file['file_name']</a></td>
+		</tr>
+		<!--{/loop}-->
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){	
+		$(".j_hdfs").addClass('active');
+	})
+</script>

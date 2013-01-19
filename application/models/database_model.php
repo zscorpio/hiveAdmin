@@ -354,7 +354,6 @@ class Database_model extends HIVE_Model{
 			// $this->history->create_history($this->session->userdata('username'), $finger_print);
 			echo $run_file;
 			$cmd = $LANG . $JAVA_HOME . $HADOOP_HOME . $HIVE_HOME . $config['hive_home'] . "/bin/hive -f " . $log_file . " > " . $out_file;
-			// var_dump($cmd);
 			$this->asyncExecuteHql($cmd, $run_file, 2, $code);
 			$this->utils_biz->exportCsv($finger_print);
 			sleep(1);
@@ -407,6 +406,7 @@ class Database_model extends HIVE_Model{
 		fclose($pipes[1]);
 		fclose($pipes[2]);
 		$code= proc_close($process);
+		// var_dump($command);
 		return $output;
 	}
 

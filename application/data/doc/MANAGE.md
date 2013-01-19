@@ -7,6 +7,8 @@
 		 /usr/hadoop/hbase-0.94.2/bin/start-hbase.sh
 	启动thrift
 		/usr/hadoop/hive-0.9.0/bin/hive --service hiveserver
+	全部web服务重启
+		/root/lnmp restart
 	重启nginx
 		service nginx restart
 	重启php-fpm
@@ -27,6 +29,9 @@
 		 kill -9 PID
 	格式化
 		/usr/hadoop/hadoop-1.1.1/bin/stop-all.sh
-		find / -name derby.log	 rm -rf derby.log
+		find / -name derby.logderby.log	 rm -rf derby.log
 		find / -name metastore_db rm -rf metastore_db
+		find / -name metastore_db -exec rm -rf {} \;
+		find / -name derby.log -exec rm -rf {} \;
+		rm -rf /tmp/*
 		/usr/hadoop/hadoop-1.1.1/bin/hadoop namenode -format
