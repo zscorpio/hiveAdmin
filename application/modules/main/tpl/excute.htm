@@ -1,0 +1,38 @@
+<link href="/ui/common/css/codemirror.css" rel="stylesheet" type="text/css" />
+<script type='text/javascript' src='/ui/common/js/codemirror.js'></script>
+<script type='text/javascript' src='/ui/common/js/codemirror-mysql.js'></script>
+<script type='text/javascript' src='/ui/common/js/jquery.artDialog.min.js'></script>
+<script type='text/javascript' src='/ui/main/js/query.js'></script>
+<div class="row">
+	<div class="span2 sidebar">
+		<div class="well">
+			<ul class="nav nav-list">
+				<li class="nav-header">数据库{$database}的表</li>
+				<!--{loop $tables $key $table}-->
+					<li class="clearfix">
+						<a href="javascript:;">{$table}</a>
+						<i class="icon-plus add-table" data-db="{$table}" data-detail=$table_detail[$key]['detail'] data-key="{$table}" data-cn-key="$table_detail[$key]['cn_key']">
+					</i></li>
+				<!--{/loop}-->
+			</ul>
+		</div>
+	</div>
+	<div class="span10 content pull-right">
+		<div class="hp-main">
+			<div class="condition-add">
+				<ul>
+					<li class="btn" data-type="where">增加判断条件</li>
+					<li class="btn btn-primary pull-right" data-type="generate">重新生成</li>
+				</ul>
+			</div>
+			<ul class="hp-box-container clearfix">
+			</ul>
+			<div class="condition-preview">
+				<ul class="clearfix">
+				</ul>
+			</div>
+			<div class="hp-code-preview" data-key_list="">
+				<textarea id="mysql-code" class="hp-code-area">
+				</textarea>
+			</div>
+		</div>

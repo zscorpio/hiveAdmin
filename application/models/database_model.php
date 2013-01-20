@@ -52,10 +52,7 @@ class Database_model extends HIVE_Model{
 	// 获取数据库信息
 	public function getDbInfo($db){
 		try{
-			$this->client->execute('use '.$db);
-			$this->client->execute('describe database '.$db);
-			$result = $this->client->fetchAll();
-			return $result;
+			return $this->client->get_database($db);
 		}catch (Exception $e){
 			return 'Caught exception: '. $e->getMessage()."\n";
 		}
@@ -143,65 +140,29 @@ class Database_model extends HIVE_Model{
 	}
 
 	// 获取表信息
-	public function getTbaleInfo($database,$table){
+	public function getTableInfo($database,$table){
 		try{
-			$this->client->execute('use '.$database);
-			$sql = "desc formatted ".$table;
-			$this->client->execute($sql);
-			$result =  $this->client->fetchAll();
-			require_once APPPATH."third_party/thrift/classes/class.etc.php";
-			$etc = new Etc;
-			$table_desc_tmp = $etc->GetTableDetail($result, "1");
-			$table_desc = array();
-			foreach ($table_desc_tmp as $key => $value) {
-				$array = array();
-				$tmp = explode('	',$value);
-				$array['name']  	= trim($tmp[0]);
-				$array['type']  	= trim($tmp[1]);
-				if(isset($tmp[2])){
-					$array['comment']  	= trim($tmp[2]);
-				}else{
-					$array['comment']  	= '';
-				}
-				array_push($table_desc, $array);
-			}
-			// ==============================================
-			$detail_tmp = $etc->GetTableDetail($result, "2");
-			$detail = array();
-			foreach ($detail_tmp as $key => $value) {
-				$array = array();
-				$tmp = explode('	',$value);
-				$array['key']  	= trim($tmp[0]);
-				if(isset($tmp[1])){
-					$array['value'] = trim($tmp[1]);
-				}else{
-					$array['value'] = '';
-				}
-				array_push($detail, $array);
-			}
-			// ==============================================
-			$storage_tmp = $etc->GetTableDetail($result, "3");
-			$storage = array();
-			foreach ($storage_tmp as $key => $value) {
-				$array = array();
-				$tmp = explode('	',$value);
-				$array['key']  	= trim($tmp[0]);
-				if(isset($tmp[1])){
-					$array['value'] = trim($tmp[1]);
-				}else{
-					$array['value'] = '';
-				}
-				array_push($storage, $array);
-			}
-			// ==============================================
-			$tmp = array();
-			$tmp["table_desc"] 	= $table_desc;
-			$tmp["detail"] 		= $detail;
-			$tmp["storage"] 	= $storage;
-			return $tmp;
+			$tableInfo = $this->client->get_table($database, $table);
+			return $tableInfo;
 		}catch (Exception $e){
 			return 'Caught exception: '. $e->getMessage()."\n";
 		}
+	}
+
+	// 解析语言
+	public function parsedInfo($database,$table){
+		$result = array();
+		$data = $this->getTableInfo($database,$table);
+		foreach ($data as $key => $value) {
+			if($key == 'table_desc'){
+				foreach ($value as $skey => $svalue) {
+					$tmp = array();
+					$tmp[$svalue['name']] = $svalue['comment'];
+					$result[$skey] = $tmp;
+				}
+			}
+		}
+		return $result;
 	}
 
 	// 复制表

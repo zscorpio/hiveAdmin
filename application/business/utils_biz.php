@@ -60,4 +60,23 @@ class Utils_biz
 		}
 	}
 
+	// 对象转数组
+	function object_to_array($obj){
+		$_arr = is_object($obj) ? get_object_vars($obj) : $obj;
+		$arr = array();
+		foreach ($_arr as $key => $val){
+			$val = (is_array($val) || is_object($val)) ? $this->object_to_array($val) : $val;
+			$arr[$key] = $val;
+		}
+		return $arr;
+	}
+
+	// 表属性json化
+	function json_cols($array){
+		$tmp = array();
+		foreach ($array as $key => $value) {
+			$tmp[$value['name']] = $value['comment'];
+		}
+		return $tmp;
+	}
 }

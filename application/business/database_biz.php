@@ -52,9 +52,14 @@ class Database_biz
 		return $this->ci->database_model->delTable($database,$table);
 	}
 
-	function getTbaleInfo($database,$table)
+	function getTableInfo($database,$table)
 	{
-		return $this->ci->database_model->getTbaleInfo($database,$table);
+		return $this->ci->database_model->getTableInfo($database,$table);
+	}	
+	
+	function parsedInfo($database,$table)
+	{
+		return $this->ci->database_model->parsedInfo($database,$table);
 	}	
 
 	function cloneTable($data)

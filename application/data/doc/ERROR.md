@@ -50,6 +50,9 @@
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop fs -chmod 777  /tmp
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfs -chown -R  root:root /tmp
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfs -chmod a+w /tmp
+####Q:FAILED: Error in metadata: javax.jdo.JDODataStoreException: Error(s) were found while auto-creating/validating the datastore for classes. The errors are printed in the log, and are attached to this exception.NestedThrowables:com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Specified key was too long; max key length is 1000 bytes
+	alter database metastore character set latin1;
+	把metastore_db存在mysql里面那个数据库编码变一下...
 
 
 ### 附录:

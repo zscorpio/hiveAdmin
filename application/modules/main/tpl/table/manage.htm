@@ -1,4 +1,5 @@
-<script type="text/javascript" src="/ui/main/add_table.js"></script>
+<a href="/main/excute?database={$database}" class="btn btn-primary" style="margin-bottom:10px;">数据库内查询</a>
+<script type="text/javascript" src="/ui/main/js/add_table.js"></script>
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -9,9 +10,9 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td>$info[0][0]</td>
-			<td>$info[0][1]</td>
-			<td>$info[0][2]</td>
+			<td>$info[name]</td>
+			<td>$info[description]</td>
+			<td>$info[locationUri]</td>
 		</tr>
 	</tbody>
 </div>

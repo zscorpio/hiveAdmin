@@ -7,7 +7,7 @@
 		</tr>
 	</thead>
 	<tbody>	
-		<!--{loop $table_desc $per}-->
+		<!--{loop $sd['cols'] $per}-->
 		<tr>
 			<td>$per['name']</td>
 			<td>$per['type']</td>
@@ -21,22 +21,19 @@
 		<th>详细名称</th>
 		<td>详细值</td>
 	</tr>
-	<!--{loop $detail $per}-->
-	<tr>
-		<th>$per['key']</th>
-		<td>$per['value']</td>
-	</tr>
-	<!--{/loop}-->
-</table>
-<table class="table table-bordered">
-	<tr>
-		<th>存储名称</th>
-		<td>存储值</td>
-	</tr>
-	<!--{loop $storage $per}-->
-	<tr>
-		<th>$per['key']</th>
-		<td>$per['value']</td>
-	</tr>
+	<!--{loop $result $key $value}-->
+		<!--{if is_array($value)}-->
+			<!--{loop $value $skey $svalue}-->
+				<tr>
+					<th>$skey</th>
+					<td>$svalue</td>
+				</tr>
+			<!--{/loop}-->	
+		<!--{else}-->
+			<tr>
+				<th>$key</th>
+				<td>$value</td>
+			</tr>
+		<!--{/if}-->
 	<!--{/loop}-->
 </table>

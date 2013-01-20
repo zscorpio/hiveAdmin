@@ -12,7 +12,7 @@ class Table extends MY_Controller{
 		$this->load->library(array('session','layout'));
 		$this->load->helper('url');
 		$this->load->business('database_biz');
-		$this->load->business('tab_biz');
+		$this->load->business('utils_biz');
 	}
 
 	public function index(){
@@ -25,14 +25,10 @@ class Table extends MY_Controller{
 		$result = $this->database_biz->listTable($database);
 		$table_detail = array();
 		foreach ($result as $key => $value) {
-			$detail = $this->database_biz->getTbaleInfo($database,$value);
-			foreach ($detail['detail'] as $skey => $svalue) {
-				if($svalue['key'] == 'Table Type:'){
-					$table_detail[$key]['type'] = $svalue['value'];
-				}
-			}
+			$detail = $this->database_biz->getTableInfo($database,$value);
+			$table_detail[$key]['type'] = $detail->tableType;
 		}
-		$this->_data["info"] = $this->tab_biz->tabExplode($this->database_biz->getDbInfo($database));
+		$this->_data["info"] = $this->utils_biz->object_to_array($this->database_biz->getDbInfo($database));
 		$this->_data['table_list'] = $result;
 		$this->_data['table_detail'] = $table_detail;
 		$this->_data['database'] = $database;
@@ -97,10 +93,11 @@ class Table extends MY_Controller{
 	public function detail(){
 		$database 	= $this->input->get('database');
 		$table 		= $this->input->get('table');
-		$result = $this->database_biz->getTbaleInfo($database,$table);
-		$this->_data["table_desc"] 	= $result["table_desc"];
-		$this->_data["detail"] 		= $result["detail"];
-		$this->_data["storage"] 	= $result["storage"];
+		$result 	= $this->utils_biz->object_to_array($this->database_biz->getTableInfo($database,$table));
+		$sd 		= $result['sd'];
+		unset($result['sd']);
+		$this->_data["result"] 	= $result;
+		$this->_data["sd"] 		= $sd;
 		$this->layout->template('/table/detail', $this->_data);
 	}
 
@@ -154,16 +151,14 @@ class Table extends MY_Controller{
 		}else{		
 			$database 	= $this->input->get('database');
 			$table		= $this->input->get('table');
-			$result = $this->database_biz->getTbaleInfo($database,$table);
-			foreach ($result['detail'] as $key => $value) {
-				if($value['key'] == 'Table Type:'){
-					$external = $value['value'];
-				}
-			}
+			$result		= $this->utils_biz->object_to_array($this->database_biz->getTableInfo($database,$table));
+			$sd 		= $result['sd'];
+			unset($result['sd']);
+			$external = $result["tableType"];
+			$this->_data["sd"] 		= $sd;
 			$this->_data["database"] 	= $database;
 			$this->_data["table"] 		= $table;
-			$this->_data["table_desc"] 	= $result["table_desc"];
-			$this->_data["detail"] 		= $result["detail"];
+			$this->_data["result"] 		= $result;
 			$this->_data["external"] 	= $external;
 			$this->layout->template('/table/alert', $this->_data);
 		}

@@ -195,6 +195,22 @@ web环境配好之后http://ip/doc里面还有一些其他的文档
 		/sbin/chkconfig mysqld on            [设置mysql服务开机启动] 
 		/sbin/service httpd start            [启动httpd服务,与开机启动无关] 
 		/sbin/service mysqld start           [启动mysql服务,与开机无关] 
+	3.可以顺便安装下x-debug...这样调试更清楚
+		wget http://xdebug.org/files/xdebug-2.2.1.tgz
+		cp /root/download/xdebug-2.2.1.tgz /usr/local/xdebug
+		tar -xzf xdebug-2.2.1.tgz
+		rm -rf xdebug-2.2.1.tgz
+		cd xdebug-2.2.1/
+		/usr/local/php/bin/phpize
+		./configure --with-php-config=/usr/local/php/bin/php-config
+		make && make install
+		安装成功提示 Installing shared extensions:     /usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/
+		vim /usr/local/php/etc/php.ini
+		最后加上
+			[xDebug]
+			zend_extension=/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so
+		最后/root/lnmp restart	
+
 
 ### 附录
 	https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin(官方metastore介绍)

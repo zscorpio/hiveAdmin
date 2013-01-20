@@ -58,3 +58,21 @@
 		| TEXTFILE
 		| RCFILE     (Note: only available starting with 0.6.0)
 		| INPUTFORMAT input_format_classname OUTPUTFORMAT output_format_classname
+
+(下面内容基本上来自网络...)
+
+用已知表名创建一个表的时候,如果同名表已经存在则会报一个表已存在的异常,不过你可以使用IF NOT EXISTS来防止这个错误.
+
+EXTERNAL 关键字可以让用户创建一个外部表,在建表的同时指定一个指向实际数据的路径（LOCATION）,Hive 创建内部表时,会将数据移动到数据仓库指向的路径；若创建外部表,仅记录数据所在的路径,不对数据的位置做任何改变.在删除表的时候,内部表的元数据和数据会被一起删除,而外部表只删除元数据,不删除数据.
+
+有分区的表可以在创建的时候使用 PARTITIONED BY 语句。一个表可以拥有一个或者多个分区，每一个分区单独存在一个目录下。而且，表和分区都可以对某个列进行 CLUSTERED BY 操作，将若干个列放入一个桶（bucket）中。也可以利用SORT BY 对数据进行排序。这样可以为特定应用提高性能。
+
+like仅复制表结构，但是不复制数据 
+
+Hive 只支持等值连接（equality joins）、外连接（outer joins）和（left semi joins）。Hive 不支持所有非等值的连接，因为非等值连接非常难转化到 map/reduce 任务。另外，Hive 支持多于 2 个表的连接。 
+
+允许的等值连接 
+SELECT a.* FROM a JOIN b ON (a.id = b.id)   
+SELECT a.* FROM a JOIN b ON (a.id = b.id AND a.department = b.department)  
+
+join 时，每次 map/reduce 任务的逻辑是这样的：reducer 会缓存 join 序列中除了最后一个表的所有表的记录，再通过最后一个表将结果序列化到文件系统。这一实现有助于在 reduce 端减少内存的使用量。实践中，应该把最大的那个表写在最后（否则会因为缓存浪费大量内存）。例如： 
