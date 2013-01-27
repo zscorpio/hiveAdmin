@@ -1,3 +1,4 @@
+from https://cwiki.apache.org/confluence/display/Hive/LanguageManual
 ## 新建表
 	CREATE [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name
 		[(col_name data_type [COMMENT col_comment], ...)]
@@ -76,3 +77,5 @@ SELECT a.* FROM a JOIN b ON (a.id = b.id)
 SELECT a.* FROM a JOIN b ON (a.id = b.id AND a.department = b.department)  
 
 join 时，每次 map/reduce 任务的逻辑是这样的：reducer 会缓存 join 序列中除了最后一个表的所有表的记录，再通过最后一个表将结果序列化到文件系统。这一实现有助于在 reduce 端减少内存的使用量。实践中，应该把最大的那个表写在最后（否则会因为缓存浪费大量内存）。例如： 
+
+keytool -genkey -alias [alias_name] -keyalg RSA -keysize 2048 -keystore [keystore_name]

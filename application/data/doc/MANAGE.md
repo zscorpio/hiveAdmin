@@ -27,6 +27,8 @@
 	查看端口被哪个进程占用
 		 lsof -i:10000(yum install lsof)
 		 kill -9 PID
+	时间校对
+		rdate -t 60 -s stdtime.gov.hk	 
 	格式化
 		/usr/hadoop/hadoop-1.1.1/bin/stop-all.sh
 		find / -name derby.logderby.log	 rm -rf derby.log

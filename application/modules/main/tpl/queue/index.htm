@@ -1,0 +1,48 @@
+<ul class="nav nav-pills">
+	<li class="active">
+		<a href="/main/taskqueue">增加队列</a>
+	</li>
+	<li><a href="/main/manage">队列管理</a></li>
+</ul>
+<div class="add-queue">
+	<input type="text" name="url" class="url no-border-input span3" placeholder="请输入url">
+	<select class="method span1">
+		<option value="GET" selected="">GET</option>
+		<option value="POST">POST</option>
+	</select>
+	<div class="params-pair">
+		<div class="params-row">
+			<input type="text" class="key no-border-input span2" placeholder="Key">
+			<input type="text" class="value no-border-input span2" placeholder="Value">
+		</div>
+	</div>
+	<div class="time">
+		<input type="text" class="minute no-border-input span1" placeholder="分钟">
+		<input type="text" class="hour no-border-input span1" placeholder="小时">
+		<input type="text" class="day no-border-input span1" placeholder="日期">
+		<input type="text" class="month no-border-input span1" placeholder="月份">
+		<input type="text" class="week no-border-input span1" placeholder="星期">
+	</div>
+</div>
+<style type="text/css">
+	.no-border-input{
+		border-top: none;min-height: 18px;
+		padding: 5px;
+		padding-left: 0px;
+		color: #333 !important;
+		border: none !important;
+		border-bottom: solid thin #ccc !important;
+		box-shadow: none !important;
+		border-radius: 0 !important;
+		outline: none !important;
+	}
+	select.method{
+		margin-left: 20px;
+	}
+	.params-row .value{
+		margin-left: 25px;
+	}
+	.time input{
+		margin-left: 2px;
+	}
+</style>

@@ -15,14 +15,22 @@ class Doc_Controller extends CI_Controller {
 		$tmp = array();
 		foreach ($dir_list as $key => $value) {
 			$tmp[$key]['dir']['en'] = $value;
-			$tmp[$key]['dir']['ch'] = $file_trans[$value];
+			if(isset($file_trans[$value])){
+				$tmp[$key]['dir']['ch'] = $file_trans[$value];
+			}else{
+				$tmp[$key]['dir']['ch'] = $value;
+			}
 			$file_list = $this->getFile(APPPATH.'data/'.$value);
 			foreach ($file_list as $skey => $svalue) {
 				$atmp = explode(APPPATH.'data/'.$value."/", $svalue);
 				$atmp = explode(".", $atmp[1]);
 				$file_list[$skey] = array();
 				$file_list[$skey]['en'] = $svalue;
-				$file_list[$skey]['ch'] = $file_trans[$atmp[0]];
+				if(isset($file_trans[$atmp[0]])){
+					$file_list[$skey]['ch'] = $file_trans[$atmp[0]];
+				}else{
+					$file_list[$skey]['ch']	= $atmp[0];				
+				}
 			}
 			$tmp[$key]['child'] = $file_list;
 		}

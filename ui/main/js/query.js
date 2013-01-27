@@ -190,20 +190,39 @@ var Sql = {
 	}
 }
 $(function(){
+	// 左侧添加表
 	$(".add-table").click(function(){
 		var obj = $(this);
 		var key_list = $(".hp-code-preview").data("key_list");
+		if(key_list){
+			key_list = JSON.parse(key_list);
+		}else{
+			key_list = [];
+		}
 		var key = obj.data('key');
-		if( key_list.indexOf( ","+key ) == "-1" ){
+		if( $.inArray(key,key_list) == "-1"){
 			var data = {
 				title 	: obj.siblings("a").text(),
 				key 	: key,
 				detail 	: obj.data('detail')
 			}
-			console.log(data);
 			Hadoop.init('createBox',data);
-			$(".hp-code-preview").data("key_list",key_list+","+key);
+			key_list.push(key);
+			$(".hp-code-preview").data("key_list",JSON.stringify(key_list));
 		}
+	})
+	// 移除
+	$(".op-close").live("click",function(){
+		var key = $(this).parents(".hp-detail-box").data('key');
+		var key_list = JSON.parse($(".hp-code-preview").data("key_list"));
+		$(this).parents(".hp-detail-box").remove();
+		var n = key_list.getArrayIndex(key);
+		key_list.remove(n);
+		$(".hp-code-preview").data("key_list",JSON.stringify(key_list));
+	})
+	// 最小化
+	$(".op-min").live("click",function(){
+		$(this).parent(".op-area").siblings("ul").slideToggle();
 	})
 	$(".check-reverse").live('click',function(){
 		$(this).parent('h4').siblings('ul').find('.check-li').each(function () {  
@@ -212,15 +231,6 @@ $(function(){
 	})
 	$(".condition-add ul li").live('click',function(){
 		Condition.init($(this).data('type'));
-	})
-	$(".op-close").live("click",function(){
-		var key = $(this).parents(".hp-detail-box").data('key');
-		var key_list = $(".hp-code-preview").data("key_list");
-		$(this).parents(".hp-detail-box").remove();
-		$(".hp-code-preview").data("key_list",key_list.replace(","+key, ""));
-	})
-	$(".op-min").live("click",function(){
-		$(this).parent(".op-area").siblings("ul").slideToggle();
 	})
 	$(".condition-bg span").live("click",function(){
 		$("#dialog-follow,#active-span,#active-b").attr("id","");

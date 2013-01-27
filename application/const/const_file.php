@@ -14,5 +14,8 @@ $const['file'] = array(
 		'PREPARE'	=> '准备',
 	'translate' 	=> '翻译',
 		'database' 	=> '数据库',
-		'table'		=> '表'
+		'table'		=> '表',
+	'gearman'		=> 'gearman',
+		'install'	=> '安装',
+		'api'		=> '接口',
 );

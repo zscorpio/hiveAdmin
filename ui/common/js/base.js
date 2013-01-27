@@ -19,7 +19,7 @@ $(function(){
 	// 左侧数据库高亮
 	var url = $.url(),
 		database = url.param('database');
-	$(".sidebar li a").each(function(){
+	$(".db-list li a").each(function(){
 		if($(this).text() == database){
 			$(this).parent('li').addClass('active')
 		}
@@ -75,4 +75,29 @@ $(function(){
 		});	
 	}
 	$(".sidebar").smartFloat();
+
+	// array扩展
+	Array.prototype.remove = function ( dx ) {
+		if (isNaN(dx) || dx >= this.length) {
+			return false;
+		}
+		for (var i = 0, n = 0; i < this.length; i++) {
+			if (this[i] != this[dx]) {
+				this[n++] = this[i]
+			}
+		}
+		this.length -= 1
+	}
+
+	// array扩展
+	Array.prototype.getArrayIndex = function ( value ) {
+		var index = -1;
+		for (var i = 0; i < this.length; i++) {
+			if (this[i] == value) {
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
 })
