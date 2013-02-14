@@ -45,7 +45,7 @@
 	chown -R root:root metastore_db
 	如果不知道是哪个....那就全部吧.....
 ####Q:FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask<br>java.lang.reflect.InvocationTargetException NestedThrowables:FAILED: Error in metadata: javax.jdo.JDOFatalInternalException: Error creating transactional connection factory
-	需要把mysql-connector-java-5.1.15-bin.jar拷贝到hive的lib目录下才行
+	需要把mysql-connector-java-5.1.15-bin.jar拷贝到hive的lib目录下才行(找不到就下一个吧)
 ####Q:at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.check(FSPermissionChecker.java:199)<br>Caused by: org.apache.hadoop.ipc.RemoteException: org.apache.hadoop.security.AccessControlException: Permission denied: user=www, access=WRITE, inode="tmp":root:supergroup:rwxr-xr-x
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop fs -chmod 777  /tmp
 	/usr/hadoop/hadoop-1.1.1/bin/hadoop dfs -chown -R  root:root /tmp

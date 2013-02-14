@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://master.500mi.com';
+$config['base_url']	= 'http://hivefan.com';
 
 /*
 |--------------------------------------------------------------------------

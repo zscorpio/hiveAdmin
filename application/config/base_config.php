@@ -2,7 +2,7 @@
 	// 基本配置
 	$config = array(
 		'thirft'		=>	array(
-			'host'		=>	'192.168.1.59',
+			'host'		=>	'127.0.0.1',
 			'port'		=>	'10000',
 			'root'		=>	APPPATH.'third_party/thrift/'
 		),

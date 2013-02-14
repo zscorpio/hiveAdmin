@@ -7,6 +7,7 @@
 		 /usr/hadoop/hbase-0.94.2/bin/start-hbase.sh
 	启动thrift
 		/usr/hadoop/hive-0.9.0/bin/hive --service hiveserver
+		/usr/hadoop/hive-0.9.0/bin/hive --service hiveserver >/dev/null 2>/dev/null &(这样不会输出结果，后台运行)
 	全部web服务重启
 		/root/lnmp restart
 	重启nginx
